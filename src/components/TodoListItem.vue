@@ -3,9 +3,11 @@
     <label v-if="!editMode"> {{ todo }} </label>
     <input v-if="editMode" v-model="inputEdited" />
 
-    <button v-if="!editMode" @click="editList">Edit</button>
-    <button v-if="!editMode" @click="hapusList(index)">Hapus</button>
-    <button v-if="editMode" @click="editListBaru(index)">Input Edit</button>
+    <span class="allButton">
+      <button v-if="!editMode" @click="editList">Edit</button>
+      <button v-if="!editMode" @click="hapusList(index)">Hapus</button>
+      <button v-if="editMode" @click="editListBaru(index)">Input Edit</button>
+    </span>
   </li>
 </template>
 <script>
@@ -45,3 +47,14 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+button {
+  margin: 5px;
+}
+.allButton {
+  position: relative;
+
+  left: 70%;
+}
+</style>

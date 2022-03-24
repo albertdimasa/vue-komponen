@@ -10,8 +10,11 @@
         @hapus-list="hapusList"
       />
     </ol>
-    <input type="text" v-model="userTodo" />
-    <button @click="tambahTodo">Tambahkan</button>
+    <div class="tambahInput">
+      <input type="text" v-model="userTodo" />
+      <button @click="tambahTodo">Tambahkan</button>
+    </div>
+
     <TextHebat :list-todo="listTodo.length >= 5" />
   </div>
 </template>
@@ -59,3 +62,16 @@ export default {
   },
 };
 </script>
+<style scoped>
+input {
+  width: 80%;
+}
+button {
+  margin-left: 20px;
+  padding: 3px;
+}
+.tambahInput {
+  width: 100%;
+  display: flex;
+}
+</style>
