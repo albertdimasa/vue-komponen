@@ -26,11 +26,12 @@ export default {
   mounted() {
     this.inputEdited = this.todo;
   },
-  //   watch: {
-  //     todo(value) {
-  //       this.inputEdited = value;
-  //     },
+  // watch: {
+  //   todo() {
+  //     this.$props.todo = this.inputEdited;
   //   },
+  // },
+
   methods: {
     editList(index) {
       this.$emit("edit-todo", index);
@@ -42,19 +43,20 @@ export default {
     editListBaru(index) {
       this.$emit("edit-list-baru", index, this.inputEdited);
       this.editList();
-      this.inputEdited = "";
     },
   },
 };
 </script>
 
 <style scoped>
+li {
+  margin: 15px;
+}
 button {
-  margin: 5px;
+  margin-right: 15px;
 }
 .allButton {
-  position: relative;
-
-  left: 70%;
+  position: absolute;
+  right: 15%;
 }
 </style>

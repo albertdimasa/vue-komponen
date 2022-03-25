@@ -71,6 +71,7 @@ button {
   padding: 3px;
 }
 .tambahInput {
+  margin-top: 25px;
   width: 100%;
   display: flex;
 }
