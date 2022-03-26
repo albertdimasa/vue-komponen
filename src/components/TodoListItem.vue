@@ -23,6 +23,7 @@ export default {
     todo: String,
     index: Number,
   },
+
   mounted() {
     this.inputEdited = this.todo;
   },
@@ -36,7 +37,11 @@ export default {
       this.$emit("hapus-list", index);
     },
     editListBaru(index) {
-      this.$emit("edit-list-baru", index, this.inputEdited);
+      this.editListValue();
+      this.$emit("edit-list-baru", index);
+    },
+    editListValue() {
+      this.$emit("edit-list-value", this.inputEdited);
       this.editList();
     },
   },

@@ -4,20 +4,24 @@ import CreatePerState from "vuex-persistedstate";
 
 Vue.use(Vuex);
 
-const perstate = CreatePerState({
-  state: ["name", "listTodo", "hapusTodo", "editTodo"],
+const PerState = CreatePerState({
+  state: ["name", "listTodo", "baruTodo"],
 });
 
 export default new Vuex.Store({
-  plugins: [perstate],
+  plugins: [PerState],
   state: {
     name: "",
+    baruTodo: "",
     listTodo: [],
   },
   getters: {},
   mutations: {
     setName(state, payload) {
       state.name = payload;
+    },
+    setBaruTodo(state, payload) {
+      state.baruTodo = payload;
     },
     tambahTodo(state, payload) {
       if (payload != "") {
@@ -29,13 +33,13 @@ export default new Vuex.Store({
     hapusTodo(state, payload) {
       state.listTodo = state.listTodo.filter((item, id) => id != payload);
     },
-    editTodo(state, index, payload) {
-      if (payload != "") {
+    editTodo(state, index) {
+      if (state.baruTodo != "") {
         state.listTodo.map((item, id) =>
-          id === index ? console.log(index, " - ", item, " - ", payload) : ""
+          id === index ? Vue.set(state.listTodo, id, state.baruTodo) : ""
         );
       } else {
-        alert("Data baru tidak boleh kosong");
+        alert("Data input baru tidak boleh kosong");
       }
     },
   },
@@ -43,15 +47,17 @@ export default new Vuex.Store({
     changeName(store, payload) {
       store.commit("setName", payload);
     },
-    tambahTodo(store, payload) {
-      store.commit("tambahTodo", payload);
+    tambahTodo(store, todoBaru) {
+      store.commit("tambahTodo", todoBaru);
     },
-    hapusTodo(store, payload) {
-      store.commit("hapusTodo", payload);
+    hapusTodo(store, index) {
+      store.commit("hapusTodo", index);
     },
-    editTodo(store, index, payload) {
-      console.log(payload);
-      store.commit("editTodo", index, payload);
+    editTodoValue(store, value) {
+      store.commit("setBaruTodo", value);
+    },
+    editTodo(store, index) {
+      store.commit("editTodo", index);
     },
   },
   modules: {},

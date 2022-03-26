@@ -8,6 +8,7 @@
         :todo="Todo"
         :index="index"
         @edit-list-baru="editBaru"
+        @edit-list-value="editValue"
         @hapus-list="hapusList"
       />
     </ol>
@@ -36,7 +37,6 @@ export default {
       userTodo: "",
     };
   },
-
   computed: {
     currentUser() {
       return this.$store.state.name;
@@ -59,9 +59,12 @@ export default {
       this.$store.dispatch("hapusTodo", index);
     },
 
-    //Hasil sudah benar tapi tidak langsung ke load
-    editBaru(index, value) {
-      this.$store.dispatch("editTodo", index, value);
+    editBaru(index) {
+      this.$store.dispatch("editTodo", index);
+    },
+
+    editValue(value) {
+      this.$store.dispatch("editTodoValue", value);
     },
   },
 };
