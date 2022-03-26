@@ -26,11 +26,6 @@ export default {
   mounted() {
     this.inputEdited = this.todo;
   },
-  // watch: {
-  //   todo() {
-  //     this.$props.todo = this.inputEdited;
-  //   },
-  // },
 
   methods: {
     editList(index) {

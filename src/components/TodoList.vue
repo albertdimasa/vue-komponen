@@ -1,8 +1,9 @@
 <template>
-  <div id="todolist">
+  <div>
+    <p>Ini adalah namaku: {{ currentUser }}</p>
     <ol>
       <TodoListItem
-        v-for="(Todo, index) in listTodo"
+        v-for="(Todo, index) in listTodoNow"
         :key="index"
         :todo="Todo"
         :index="index"
@@ -12,10 +13,11 @@
     </ol>
     <div class="tambahInput">
       <input type="text" v-model="userTodo" />
-      <button @click="tambahTodo">Tambahkan</button>
+      <button @click="todoBaru">Tambahkan</button>
+      <button @click="gantiNama">Ganti Nama</button>
     </div>
 
-    <TextHebat :list-todo="listTodo.length >= 5" />
+    <TextHebat :list-todo="listTodoNow.length >= 5" />
   </div>
 </template>
 
@@ -31,33 +33,35 @@ export default {
   },
   data() {
     return {
-      listTodo: [],
       userTodo: "",
     };
   },
 
-  methods: {
-    tambahTodo() {
-      if (this.userTodo != "") {
-        this.listTodo.push(this.userTodo);
-        this.userTodo = "";
-      } else {
-        alert("Data tidak boleh kosong");
-      }
+  computed: {
+    currentUser() {
+      return this.$store.state.name;
     },
+    listTodoNow() {
+      return this.$store.state.listTodo;
+    },
+  },
+  methods: {
+    gantiNama() {
+      this.$store.dispatch("changeName", this.userTodo);
+    },
+
+    todoBaru() {
+      this.$store.dispatch("tambahTodo", this.userTodo);
+      this.userTodo = "";
+    },
+
     hapusList(index) {
-      this.listTodo = this.listTodo.filter((item, id) => id != index);
+      this.$store.dispatch("hapusTodo", index);
     },
 
     //Hasil sudah benar tapi tidak langsung ke load
     editBaru(index, value) {
-      if (value != "") {
-        this.listTodo.map((item, id) =>
-          id === index ? (this.listTodo[id] = value) : ""
-        );
-      } else {
-        alert("Data baru tidak boleh kosong");
-      }
+      this.$store.dispatch("editTodo", index, value);
     },
   },
 };
