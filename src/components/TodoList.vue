@@ -1,6 +1,5 @@
 <template>
   <div>
-    <p>Ini adalah namaku: {{ currentUser }}</p>
     <ol>
       <TodoListItem
         v-for="(Todo, index) in listTodoNow"
@@ -13,9 +12,8 @@
       />
     </ol>
     <div class="tambahInput">
-      <input type="text" v-model="userTodo" />
+      <input type="text" v-model="userTodo" @keyup.enter="todoBaru" />
       <button @click="todoBaru">Tambahkan</button>
-      <button @click="gantiNama">Ganti Nama</button>
     </div>
 
     <TextHebat :list-todo="listTodoNow.length >= 5" />
@@ -38,18 +36,11 @@ export default {
     };
   },
   computed: {
-    currentUser() {
-      return this.$store.state.name;
-    },
     listTodoNow() {
       return this.$store.state.listTodo;
     },
   },
   methods: {
-    gantiNama() {
-      this.$store.dispatch("changeName", this.userTodo);
-    },
-
     todoBaru() {
       this.$store.dispatch("tambahTodo", this.userTodo);
       this.userTodo = "";
@@ -71,10 +62,11 @@ export default {
 </script>
 <style scoped>
 input {
-  width: 80%;
+  width: 100%;
+  text-transform: capitalize;
 }
 button {
-  margin-left: 20px;
+  margin-left: 10px;
   padding: 3px;
 }
 .tambahInput {

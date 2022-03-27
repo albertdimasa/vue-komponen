@@ -1,7 +1,11 @@
 <template>
   <li>
-    <label v-if="!editMode"> {{ todo }} </label>
-    <input v-if="editMode" v-model="inputEdited" />
+    <label v-if="!editMode" @click="oneTodo"> {{ todo.title }} </label>
+    <input
+      v-if="editMode"
+      v-model="inputEdited"
+      @keyup.enter="editListBaru(index)"
+    />
 
     <span class="allButton">
       <button v-if="!editMode" @click="editList">Edit</button>
@@ -20,17 +24,22 @@ export default {
     };
   },
   props: {
-    todo: String,
+    todo: Object,
     index: Number,
   },
 
   mounted() {
-    this.inputEdited = this.todo;
+    this.inputEdited = this.todo.title;
+  },
+
+  watch: {
+    todo(value) {
+      this.inputEdited = value.title;
+    },
   },
 
   methods: {
-    editList(index) {
-      this.$emit("edit-todo", index);
+    editList() {
       this.editMode = !this.editMode;
     },
     hapusList(index) {
@@ -44,6 +53,12 @@ export default {
       this.$emit("edit-list-value", this.inputEdited);
       this.editList();
     },
+    oneTodo() {
+      this.$router.push({
+        name: "todo",
+        params: { id: this.index, data: this.todo },
+      });
+    },
   },
 };
 </script>
@@ -51,12 +66,22 @@ export default {
 <style scoped>
 li {
   margin: 15px;
+  text-transform: capitalize;
 }
+
+li label {
+  cursor: pointer;
+}
+
+li input {
+  text-transform: capitalize;
+}
+
 button {
   margin-right: 15px;
 }
 .allButton {
   position: absolute;
-  right: 15%;
+  right: 5%;
 }
 </style>
