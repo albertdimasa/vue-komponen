@@ -15,7 +15,6 @@ const routes = [
     path: "/:id",
     name: "todo",
     component: DetailTodoView,
-    props: true,
   },
 ];
 

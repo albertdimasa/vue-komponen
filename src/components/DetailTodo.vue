@@ -16,7 +16,6 @@
 <script>
 export default {
   name: "DetailTodo",
-
   data() {
     return {
       oneTodo: [],
@@ -26,23 +25,31 @@ export default {
     };
   },
 
+  watch: {
+    oneTodo(value) {
+      this.descBaru = value.desc;
+    },
+  },
+
   mounted() {
     this.descBaru = this.oneTodo.desc;
-  },
-  created() {
-    this.oneTodo = this.$route.params.data;
-    this.index = this.$route.params.id;
+    this.getDatabyId();
   },
 
   methods: {
     backTo() {
       this.$router.go(-1);
     },
+    getDatabyId() {
+      this.index = this.$route.params.id;
 
+      this.oneTodo = this.$store.state.listTodo.find(
+        (item, id) => id == this.index
+      );
+    },
     ubahMode() {
       this.editMode = !this.editMode;
     },
-
     ubahDesc(index) {
       this.$store.dispatch("editDescValue", this.descBaru);
       this.$store.dispatch("editDesc", index);

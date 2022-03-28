@@ -1,6 +1,7 @@
 <template>
   <li>
     <label v-if="!editMode" @click="oneTodo"> {{ todo.title }} </label>
+
     <input
       v-if="editMode"
       v-model="inputEdited"
@@ -56,7 +57,7 @@ export default {
     oneTodo() {
       this.$router.push({
         name: "todo",
-        params: { id: this.index, data: this.todo },
+        params: { id: this.index },
       });
     },
   },
